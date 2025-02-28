@@ -1,0 +1,58 @@
+problem - We want to provide the user with a single instance of a class in whole program
+solution - Lazy solution and eager solution
+circumstance - threading  
+
+
+problem - We want to provide the user with a single instance of a class in whole program. For this we are first using lazy solution but here the object initialisation is happening each time the getInstance() methods is called.
+We want to restrict this.
+public class LazySingleton {
+    private static LazySingleton instance;
+    private LazySingleton() {}
+    public static LazySingleton getInstance() {
+        if (instance == null) {
+            instance = new LazySingleton(); // create instance when needed
+        }
+        return instance;
+    }
+}
+solution- by making the initialisation method synchronized we can ensure thread safety
+public class LazySingleton {
+    private static LazySingleton instance;
+    private LazySingleton() {}
+    public static synchronized LazySingleton getInstance() {
+        if (instance == null) {
+            instance = new LazySingleton();
+        }
+        return instance;
+    }
+}
+circumstances - the multithreaded environment is the issue 
+
+
+
+problem - We want to provide the user with a single instance of a class in whole program. For this we are using eager solution. But it is making the object at starting of the program and thus requiring us to store the reference of the object.
+public class EagerSingleton {
+    private static final EagerSingleton instance = new EagerSingleton();
+    private EagerSingleton() {}
+    public static EagerSingleton getInstance() {
+        return instance;
+    }
+}
+
+solution - 
+public class EagerSingleton {
+    private static EagerSingleton instance ;
+    private int chance = 1;
+    public makevariable(){
+        if(chance==1){
+	    instance = EagerSingelton();
+	    chance = 2;
+    }
+}
+    private EagerSingleton() {}
+    public static EagerSingleton getInstance() {
+        return instance;
+    }
+}
+
+circumstance - Memory is required to store the reference of the object even if it is not required initially
